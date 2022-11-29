@@ -4,7 +4,7 @@ use function PHPSTORM_META\elementType;
 
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: Access-Control-Allow-Origin, Accept");
-$dir="C:\\Users\Deepu\Downloads";
+$dir="C:\\xampp\htdocs\movies";
 
 $locdir=$dir;
 
@@ -48,7 +48,7 @@ if(explode(".", $files[$i])[ $length-1]=="mkv"||explode(".", $files[$i])[$length
 
             if($flag!=1)
             {
-                mysqli_query($con," insert into movies (movieName,movieGenre,movieLanguage,movieLink) values('$files[$i]','null','null','http://localhost/$files[$i]') ");
+                mysqli_query($con," insert into movies (movieName,movieGenre,movieLanguage,movieLink) values('$files[$i]','null','null','http://localhost/movies/$files[$i]') ");
             }
 
         }

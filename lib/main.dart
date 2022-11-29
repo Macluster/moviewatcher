@@ -50,45 +50,61 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color.fromARGB(255, 56, 55, 55),
-        appBar: AppBar(
-          title: const Center(
-            child: Text(
-              "Movie Watcher",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+      backgroundColor: Color.fromARGB(255, 56, 55, 55),
+      body: SizedBox(
+        width: double.infinity,
+        child: Stack(
+          children: [
+            Image.network(
+              'https://hdqwalls.com/wallpapers/movie-wall-e-ad.jpg',
+              width: double.infinity,
+              fit: BoxFit.cover,
             ),
-          ),
-          backgroundColor: Color.fromARGB(255, 56, 55, 55),
-          foregroundColor: Colors.white,
-          elevation: 0,
-        ),
-        body: SizedBox(
-          width: double.infinity,
-          child: Column(
-            children: [
-              Expanded(
-                flex: 5,
-                child: Container(
-                  width: 300,
-                  child: FutureBuilder(
-                    future: MyDatabase().getMovies(),
-                    builder: ((context, AsyncSnapshot<List<MovieModel>> snap) {
-                      if (snap.hasData) {
-                        return ListView.builder(
-                            scrollDirection: Axis.vertical,
-                            itemCount: snap.data!.length,
-                            itemBuilder: (context, index) {
-                              return MovieCard(snap.data![index]);
-                            });
-                      } else {
-                        return Text("Loading");
-                      }
-                    }),
+            Align(
+              alignment: Alignment.center,
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 50,
                   ),
-                ),
-              )
-            ],
-          ),
-        ));
+                  const Text(
+                    "Movie Watcher",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 25,
+                        color: Colors.white),
+                  ),
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  Expanded(
+                    flex: 5,
+                    child: Container(
+                      width: 600,
+                      child: FutureBuilder(
+                        future: MyDatabase().getMovies(),
+                        builder:
+                            ((context, AsyncSnapshot<List<MovieModel>> snap) {
+                          if (snap.hasData) {
+                            return ListView.builder(
+                                scrollDirection: Axis.vertical,
+                                itemCount: snap.data!.length,
+                                itemBuilder: (context, index) {
+                                  return MovieCard(snap.data![index]);
+                                });
+                          } else {
+                            return Text("Loading");
+                          }
+                        }),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

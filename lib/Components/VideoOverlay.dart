@@ -69,35 +69,48 @@ class _VideoOverlayState extends State<VideoOverlay> {
             : Container(),
         Align(
             alignment: Alignment.center,
-            child: GestureDetector(
-              onTap: () {
-                if (showIconsFlag == true) {
-                  if (isplayButtonOn == true) {
-                    setState(() {
-                      isplayButtonOn = false;
-                      widget.controller.pause();
-                    });
-                  } else {
-                    setState(() {
-                      isplayButtonOn = true;
-                      widget.controller.play();
-                    });
-                  }
-                }
-              },
-              child: showIconsFlag == true
-                  ? isplayButtonOn == true
-                      ? const Icon(
-                          Icons.pause_circle_outline,
-                          size: 60,
-                          color: Color.fromARGB(255, 216, 214, 214),
-                        )
-                      : const Icon(
-                          Icons.play_arrow,
-                          size: 60,
-                          color: Color.fromARGB(255, 216, 214, 214),
-                        )
-                  : Container(),
+            child: Row(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    widget.controller.seekTo(Duration(seconds: 200));
+                  },
+                  child: const Icon(
+                    Icons.home,
+                    size: 60,
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    if (showIconsFlag == true) {
+                      if (isplayButtonOn == true) {
+                        setState(() {
+                          isplayButtonOn = false;
+                          widget.controller.pause();
+                        });
+                      } else {
+                        setState(() {
+                          isplayButtonOn = true;
+                          widget.controller.play();
+                        });
+                      }
+                    }
+                  },
+                  child: showIconsFlag == true
+                      ? isplayButtonOn == true
+                          ? const Icon(
+                              Icons.pause_circle_outline,
+                              size: 60,
+                              color: Color.fromARGB(255, 216, 214, 214),
+                            )
+                          : const Icon(
+                              Icons.play_arrow,
+                              size: 60,
+                              color: Color.fromARGB(255, 216, 214, 214),
+                            )
+                      : Container(),
+                ),
+              ],
             )),
         Align(
             alignment: Alignment.bottomRight,
@@ -122,6 +135,16 @@ class _VideoOverlayState extends State<VideoOverlay> {
     );
   }
 
+  void seekItForward() async {
+    Duration pos = await widget.controller.position as Duration;
+    widget.controller.seekTo(Duration(seconds: 100) + pos);
+  }
+
+  void seekItBackWard() async {
+    Duration pos = await widget.controller.position as Duration;
+    widget.controller.seekTo(Duration(seconds: -100) + pos);
+  }
+
   Widget fullScreenView() {
     return Container(
       color: Colors.transparent,
@@ -136,35 +159,135 @@ class _VideoOverlayState extends State<VideoOverlay> {
             : Container(),
         Align(
             alignment: Alignment.center,
-            child: GestureDetector(
-              onTap: () {
-                if (showIconsFlag == true) {
-                  if (isplayButtonOn == true) {
-                    setState(() {
-                      isplayButtonOn = false;
-                      widget.controller.pause();
-                    });
-                  } else {
-                    setState(() {
-                      isplayButtonOn = true;
-                      widget.controller.play();
-                    });
-                  }
-                }
-              },
-              child: showIconsFlag == true
-                  ? isplayButtonOn == true
-                      ? const Icon(
-                          Icons.pause_circle_outline_outlined,
-                          size: 60,
-                          color: Color.fromARGB(255, 216, 214, 214),
-                        )
-                      : const Icon(
-                          Icons.play_arrow,
-                          size: 60,
-                          color: Color.fromARGB(255, 216, 214, 214),
-                        )
-                  : Container(),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                FloatingActionButton(
+                  elevation: 0,
+                  focusElevation: 0,
+                  backgroundColor: Colors.transparent,
+                  focusColor: Colors.transparent,
+                  onPressed: () {
+                    if (showIconsFlag == true) {
+                      setState(() {
+                        showIconsFlag = false;
+                      });
+                    } else {
+                      setState(() {
+                        showIconsFlag = true;
+                      });
+                    }
+                  },
+                  tooltip: 'Increment',
+                  child: const Icon(
+                    Icons.fast_rewind,
+                    size: 40,
+                    color: Colors.transparent,
+                  ),
+                ),
+                showIconsFlag == true
+                    ? FloatingActionButton(
+                        elevation: 0,
+                        focusElevation: 0,
+                        backgroundColor: Colors.transparent,
+                        focusColor: Colors.white,
+                        onPressed: () {
+                          seekItBackWard();
+                        },
+                        tooltip: 'Increment',
+                        child: const Icon(
+                          Icons.fast_rewind,
+                          size: 40,
+                          color: Color.fromARGB(255, 138, 137, 137),
+                        ),
+                      )
+                    : Container(),
+                const SizedBox(
+                  width: 30,
+                ),
+                FloatingActionButton(
+                  elevation: 0,
+                  focusElevation: 0,
+                  backgroundColor: Colors.transparent,
+                  focusColor: Colors.white,
+                  onPressed: () {
+                    if (showIconsFlag == true) {
+                      if (isplayButtonOn == true) {
+                        setState(() {
+                          isplayButtonOn = false;
+                          widget.controller.pause();
+                        });
+                      } else {
+                        setState(() {
+                          isplayButtonOn = true;
+                          widget.controller.play();
+                        });
+                      }
+                    }
+                  },
+                  child: showIconsFlag == true
+                      ? isplayButtonOn == true
+                          ? const Padding(
+                              padding: const EdgeInsets.all(0),
+                              child: Icon(
+                                Icons.pause_circle_outline_outlined,
+                                size: 40,
+                                color: Color.fromARGB(255, 216, 214, 214),
+                              ),
+                            )
+                          : const Padding(
+                              padding: const EdgeInsets.all(0),
+                              child: Icon(
+                                Icons.play_arrow,
+                                size: 40,
+                                color: Color.fromARGB(255, 216, 214, 214),
+                              ),
+                            )
+                      : Container(),
+                ),
+                const SizedBox(
+                  width: 30,
+                ),
+                showIconsFlag == true
+                    ? FloatingActionButton(
+                        elevation: 0,
+                        focusElevation: 0,
+                        backgroundColor: Colors.transparent,
+                        focusColor: Colors.white,
+                        onPressed: () {
+                          seekItForward();
+                        },
+                        child: const Icon(
+                          Icons.fast_forward,
+                          size: 40,
+                          color: Color.fromARGB(255, 138, 137, 137),
+                        ),
+                      )
+                    : Container(),
+                FloatingActionButton(
+                  elevation: 0,
+                  focusElevation: 0,
+                  backgroundColor: Colors.transparent,
+                  focusColor: Colors.transparent,
+                  onPressed: () {
+                    if (showIconsFlag == true) {
+                      setState(() {
+                        showIconsFlag = false;
+                      });
+                    } else {
+                      setState(() {
+                        showIconsFlag = true;
+                      });
+                    }
+                  },
+                  tooltip: 'Increment',
+                  child: const Icon(
+                    Icons.fast_rewind,
+                    size: 40,
+                    color: Colors.transparent,
+                  ),
+                ),
+              ],
             )),
         Align(
             alignment: Alignment.bottomRight,

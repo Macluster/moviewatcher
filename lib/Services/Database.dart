@@ -7,8 +7,7 @@ import '../Config/config.dart';
 class MyDatabase {
   SetUpmovies() async {
     var result = await http.post(
-        Uri.parse(
-            'http://192.168.1.55/moviewatcher/moviewatcher/Server/SetupFolders.php'),
+        Uri.parse('http://192.168.1.55/moviewatcher/Server/SetupFolders.php'),
         body: {},
         headers: {
           "Accept": "application/json",
@@ -22,14 +21,13 @@ class MyDatabase {
     List<MovieModel> list = [];
 
     var result = await http.post(
-        Uri.parse(
-            'http://192.168.1.55/moviewatcher/moviewatcher/Server/GetMovies.php'),
+        Uri.parse('http://192.168.1.55/moviewatcher/Server/GetMovies.php'),
         body: {},
         headers: {
           "Accept": "application/json",
           "Access-Control-Allow-Origin": "*"
         });
-    print(result);
+    print(result.body);
 
     // print("http request =" + result.body);
     //  print("map bval ${locMap['lat']}");

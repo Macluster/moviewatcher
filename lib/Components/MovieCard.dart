@@ -26,7 +26,7 @@ class _MovieCardState extends State<MovieCard> {
           height: 50,
           width: double.infinity,
           decoration: BoxDecoration(
-              color: Colors.amber,
+              color: Colors.white,
               borderRadius: BorderRadius.all(Radius.circular(10))),
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
@@ -34,6 +34,27 @@ class _MovieCardState extends State<MovieCard> {
               alignment: Alignment.center,
               child: Row(
                 children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: FloatingActionButton(
+                      elevation: 0,
+                      focusElevation: 0,
+                      backgroundColor: Colors.transparent,
+                      focusColor: Colors.amber,
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    ShowMoviePage(widget.model)));
+                      },
+                      tooltip: 'Increment',
+                      child:const Icon(
+                        Icons.play_arrow,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(

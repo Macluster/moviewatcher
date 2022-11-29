@@ -18,8 +18,10 @@ class _ShowMoviePageState extends State<ShowMoviePage> {
 
     return WillPopScope(
       onWillPop: () async {
-        SystemChrome.setPreferredOrientations(
-            [DeviceOrientation.portraitUp, DeviceOrientation.portraitUp]);
+        SystemChrome.setPreferredOrientations([
+          DeviceOrientation.landscapeLeft,
+          DeviceOrientation.landscapeRight
+        ]);
         Navigator.of(context).pop();
         return true;
       },
