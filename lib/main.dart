@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:moviewatcher/Components/CustomVideoPlayer.dart';
 import 'package:moviewatcher/Components/MovieCard.dart';
+import 'package:moviewatcher/Pages/SettingsPage.dart';
 import 'package:moviewatcher/Services/Database.dart';
 import 'package:video_player/video_player.dart';
 
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
       },
       child: MaterialApp(
         title: 'Flutter Demo',
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
@@ -59,6 +61,24 @@ class _MyHomePageState extends State<MyHomePage> {
               'https://hdqwalls.com/wallpapers/movie-wall-e-ad.jpg',
               width: double.infinity,
               fit: BoxFit.cover,
+            ),
+            Align(
+              alignment: Alignment.topRight,
+              child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SettingsPage()));
+                  },
+                  child: const Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Icon(
+                      Icons.settings,
+                      color: Colors.white,
+                      size: 30,
+                    ),
+                  )),
             ),
             Align(
               alignment: Alignment.center,

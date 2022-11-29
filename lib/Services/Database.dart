@@ -2,12 +2,20 @@ import 'dart:convert';
 
 import 'package:moviewatcher/Models/MovieModel.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import '../Config/config.dart';
 
 class MyDatabase {
+  String ipAdress = "";
+
+  MyDatabase() {}
+
   SetUpmovies() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    ipAdress = pref.getString('ip') ?? "192.168.1.55";
+    print("ipaddress is" + ipAdress);
     var result = await http.post(
-        Uri.parse('http://192.168.1.55/moviewatcher/Server/SetupFolders.php'),
+        Uri.parse('http://$ipAdress/moviewatcher/Server/SetupFolders.php'),
         body: {},
         headers: {
           "Accept": "application/json",
@@ -17,11 +25,13 @@ class MyDatabase {
   }
 
   Future<List<MovieModel>> getMovies() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    ipAdress = pref.getString('ip') ?? "192.168.1.55";
     MovieModel model = MovieModel(1, "", "", " ", "");
     List<MovieModel> list = [];
 
     var result = await http.post(
-        Uri.parse('http://192.168.1.55/moviewatcher/Server/GetMovies.php'),
+        Uri.parse('http://$ipAdress/moviewatcher/Server/GetMovies.php'),
         body: {},
         headers: {
           "Accept": "application/json",
