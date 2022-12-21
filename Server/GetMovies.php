@@ -15,6 +15,8 @@ while($row=mysqli_fetch_assoc($result))
 {
   
  $arr['movieId']=$row['movieId'];
+
+ 
  $arr['movieName']=$row['movieName'];
  $arr['movieGenre']=$row['movieGenre'];
  $arr['movieLanguage']=$row['movieLanguage'];
